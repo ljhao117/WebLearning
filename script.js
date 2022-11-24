@@ -1,6 +1,6 @@
 const list = document.createElement('ul');
 const info = document.createElement('p');
-const html = document.createElement('html');
+const html = document.querySelector('html');
 
 info.textContent = 'Below is a dynamic list. Click anywhere on the page to add a new list item. Click an existing list item to change it text to something else.';
 

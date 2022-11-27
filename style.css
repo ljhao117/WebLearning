@@ -1,14 +1,32 @@
-html {
-    background-color: green;
-    font-size: 20px;
+body {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-ul {
-    background: red;
-    padding: 10px;
-    border: 1px solid black;
+.sender-column {
+    text-align: right;
 }
 
-li {
-    margin-left: 20px;
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+p,
+ul,
+ol,
+dl,
+address {
+    font-size: 1.1em;
+}
+
+p,
+li,
+dd,
+dt,
+address {
+    line-height: 1.5;
 }

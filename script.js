@@ -1,21 +1,11 @@
-const list = document.createElement('ul');
-const info = document.createElement('p');
-const html = document.querySelector('html');
+function createParagraph() {
+    let para = document.createElement('p');
+    para.textContent = '你点击了这个按钮！';
+    document.body.appendChild(para);
+}
 
-info.textContent = 'Below is a dynamic list. Click anywhere on the page to add a new list item. Click an existing list item to change it text to something else.';
+const buttons = document.querySelectorAll('button');
 
-document.body.appendChild(info);
-document.body.appendChild(list);
-
-html.onclick = function () {
-    const listItem = document.createElement('li');
-    const listContent = prompt('What content do you want the list item to have?');
-    listItem.textContent = listContent;
-    list.appendChild(listItem);
-
-    listItem.onclick = function(e) {
-        e.stopPropagation();
-        const listContent = prompt('Enter new content for your list item');
-        this.textContent = listContent;
-    }
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', createParagraph);
 }

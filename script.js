@@ -1,44 +1,44 @@
-const customName = document.getElementById('customname');
-const randomize = document.querySelector('.randomize');
-const story = document.querySelector('.story');
+const displayedImage = document.querySelector('.displayed-img');
+const thumbBar = document.querySelector('.thumb-bar');
 
-function randomValueFromArray(array){
-  const random = Math.floor(Math.random() * array.length);
-  return array[random];
+const btn = document.querySelector('button');
+const overlay = document.querySelector('.overlay');
+
+/* Declaring the array of image filenames */
+const imageArrays = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+
+/* Declaring the alternative text for each image file */
+const alts = {
+  'pic1.jpg' : 'Closeup of a human eye',
+  'pic2.jpg' : 'Rock that looks like a wave',
+  'pic3.jpg' : 'Purple and white pansies',
+  'pic4.jpg' : 'Section of wall from a pharoah\'s tomb',
+  'pic5.jpg' : 'Large moth on a leaf'
+};
+
+/* Looping through images */
+for (const imageArray of imageArrays) {
+  const newImage = document.createElement('img');
+  newImage.setAttribute('src', "images/'imageArray");
+  console.log('images/$imageArray');
+  newImage.setAttribute('alt', alts[imageArray]);
+  thumbBar.appendChild(newImage);
+  newImage.addEventListener('click', e => {
+    displayedImage.src = e.target.src;
+    displayedImage.alt = e.target.alt;
+  });
 }
 
-let storyText = '今天气温 35 摄氏度，:insertx:出门散步。当走到:inserty:门前时，突然就:insertz:。人们都惊呆了，李雷全程目睹但并没有慌，因为:insertx:是一个 140 公斤的胖子，天气又辣么热。';
-let insertX = ['怪兽威利', '大老爹', '圣诞老人'];
-let insertY = ['肯德基', '迪士尼乐园', '白宫'];
-let insertZ = ['自燃了', '在人行道化成了一坨泥', '变成一只鼻涕虫爬走了'];
-
-
-function result() {
-    let newStory = storyText;
-    
-    let xItem = randomValueFromArray(insertX);
-  let yItem = randomValueFromArray(insertY);
-  let zItem = randomValueFromArray(insertZ);
-
-  newStory = newStory.replace(':insertx:', xItem);
-  newStory = newStory.replace(':insertx:', xItem);
-  newStory = newStory.replace(':inserty:', yItem);
-  newStory = newStory.replace(':insertz:', zItem);
-
-  if(customName.value !== '') {
-    const name = customName.value;
-    newStory = newStory.replace('李雷', name);
+/* Wiring up the Darken/Lighten button */
+btn.addEventListener('click', () => {
+  const btnClass = btn.getAttribute('class');
+  if (btnClass === 'dark') {
+    btn.setAttribute('class', 'light');
+    btn.textContent = 'Lighten';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  } else {
+    btn.setAttribute('class', 'dark');
+    btn.textContent = 'Darken';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
   }
-
-  if(document.getElementById("american").checked) {
-      const weight = Math.round(140 * 2.20462) + ' 磅';
-      const temperature =  Math.round(35 * 9 / 5 + 32) + ' 华氏度';
-    newStory = newStory.replace('35 摄氏度', temperature);
-    newStory = newStory.replace('140 公斤', weight);
-}
-
-  story.textContent = newStory;
-  story.style.visibility = 'visible';
-}
-
-randomize.addEventListener('click', result);
+});

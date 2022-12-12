@@ -12,13 +12,17 @@
   let request = new XMLHttpRequest();
 
   request.open('GET', requestURL);
-  request.responseType = 'json';
+  request.responseType = 'text';
   request.send();
 
   request.onload = function() {
-    let superheroes = request.response;
-    populateHeader(superheroes);
-    showHeroes(superheroes);
+    // let superheroes = request.response;
+    // populateHeader(superheroes);
+    // showHeroes(superheroes);
+    let superHeroesText = request.response;
+    let superHeroes = JSON.parse(superHeroesText);  // convert it to the object
+    populateHeader(superHeroes);
+    showHeroes(superHeroes);
   }
 
   function populateHeader(jsonObj) {

@@ -1,44 +1,106 @@
-const displayedImage = document.querySelector('.displayed-img');
-const thumbBar = document.querySelector('.thumb-bar');
+// 设置画布
 
-const btn = document.querySelector('button');
-const overlay = document.querySelector('.overlay');
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
 
-/* Declaring the array of image filenames */
-const imageArrays = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+const width = canvas.width = window.innerWidth;
+const height = canvas.height = window.innerHeight;
 
-/* Declaring the alternative text for each image file */
-const alts = {
-  'pic1.jpg' : 'Closeup of a human eye',
-  'pic2.jpg' : 'Rock that looks like a wave',
-  'pic3.jpg' : 'Purple and white pansies',
-  'pic4.jpg' : 'Section of wall from a pharoah\'s tomb',
-  'pic5.jpg' : 'Large moth on a leaf'
-};
+// 生成随机数的函数
 
-/* Looping through images */
-for (const imageArray of imageArrays) {
-  const newImage = document.createElement('img');
-  newImage.setAttribute('src', "images/'imageArray");
-  console.log('images/$imageArray');
-  newImage.setAttribute('alt', alts[imageArray]);
-  thumbBar.appendChild(newImage);
-  newImage.addEventListener('click', e => {
-    displayedImage.src = e.target.src;
-    displayedImage.alt = e.target.alt;
-  });
+function random(min,max) {
+  const num = Math.floor(Math.random() * (max - min)) + min;
+  return num;
 }
 
-/* Wiring up the Darken/Lighten button */
-btn.addEventListener('click', () => {
-  const btnClass = btn.getAttribute('class');
-  if (btnClass === 'dark') {
-    btn.setAttribute('class', 'light');
-    btn.textContent = 'Lighten';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-  } else {
-    btn.setAttribute('class', 'dark');
-    btn.textContent = 'Darken';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+// 生成随机颜色值函数
+function randomColor() {
+  // return 'rgb(' + random(0, 255) + ', ' + random(0, 255) + ', ' + random(0, 255) + ')';
+  const color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
+  return color;
+}
+
+// 定义Ball构造器
+function Ball(x, y, velX, velY, color, size) {
+  this.x = x;
+  this.y = y;
+  this.velX = velX;
+  this.velY = velY;
+  this.color = color;
+  this.size = size;
+}
+
+Ball.prototype.draw = function() {
+  ctx.beginPath();
+  ctx.fillStyle = this.color;
+  ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+  ctx.fill();
+};
+
+
+Ball.prototype.collisionDetect = function() {
+  for (let j = 0; j < balls.length; j++) {
+    if (this !== balls[j]) {
+      const dx = this.x - balls[j].x;
+      const dy = this.y - balls[j].y;
+      const distance = Math.sqrt(dx * dx + dy *dy);
+
+      if (distance < this.size + balls[j].size) {
+        balls[j].color = this.color = randomColor();
+      }
+    }
   }
-});
+};
+
+Ball.prototype.update = function() {
+  if ((this.x + this.size) >= width) {
+    this.velX = -(this.velX);
+  }
+
+  if ((this.x - this.size) <= 0) {
+    this.velX = -(this.velX);
+  }
+
+  if ((this.y + this.size) >= height) {
+    this.velY = -(this.velY);
+  }
+
+  if ((this.y - this.size) <= 0) {
+    this.velY = -(this.velY);
+  }
+
+  this.x += this.velX;
+  this.y += this.velY;
+};
+
+let balls = [];
+
+while (balls.length < 25) {
+  let size = random(10, 20);
+  let ball = new Ball(
+    random(0 + size, width - size),
+    random(0 + size, height - size),
+    // random(0 + size, height - size),
+    random(-7, 7),
+    random(-7, 7),
+    randomColor(),
+    size
+  );
+  balls.push(ball);
+}
+
+function loop() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+  ctx.fillRect(0, 0, width, height);
+
+  for (let i = 0; i < balls.length; i++) {
+    balls[i].draw();
+    balls[i].update();
+    balls[i].collisionDetect();
+  }
+
+  requestAnimationFrame(loop);
+}
+
+
+loop();

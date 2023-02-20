@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <title>弹跳彩球</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Number of primes</title>
+    <script type="text/javascript" src="script.js" defer></script>
+    <link href="style.css"rel="stylesheet">
   </head>
 
   <body>
-    <h1>弹跳彩球</h1>
-    <p>剩余彩球数：</p>
-    <canvas></canvas>
 
-    <script src="script.js"></script>
+    <label for="quota">Number of primes:</label>
+    <input type="text" id="quota" name="quota" value="1000000">
+
+    <button id="generate">Generate primes</button>
+    <button id="reload">Reload</button>
+
+    <textarea id="user-input" rows="5" cols="62">Try typing in here immediately after pressing "Generate primes"</textarea>
+
+    <div id="output"></div>
+
   </body>
+
 </html>

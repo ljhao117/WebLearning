@@ -4,22 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Number of primes</title>
-    <script type="text/javascript" src="script.js" defer></script>
-    <link href="style.css"rel="stylesheet">
+    <!-- <script src="script.js"></script> -->
+    <!-- <link href="style.css"rel="stylesheet"> -->
+    <!-- <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style> -->
   </head>
 
   <body>
+    <canvas id="canvas" width="150" height="150"></canvas>
+  <script>
+    var canvas = document.getElementById("canvas"); // 得到DOM对象
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d"); // 得到渲染上下文
 
-    <label for="quota">Number of primes:</label>
-    <input type="text" id="quota" name="quota" value="1000000">
+      // 绘制第一个长方形
+      ctx.fillStyle = "rgb(200,0,0)";
+      ctx.fillRect(10, 10, 55, 50);
 
-    <button id="generate">Generate primes</button>
-    <button id="reload">Reload</button>
-
-    <textarea id="user-input" rows="5" cols="62">Try typing in here immediately after pressing "Generate primes"</textarea>
-
-    <div id="output"></div>
-
+      // 绘制第二个长方形
+      ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+      ctx.fillRect(30, 30, 55, 50);
+    }
+  </script>
   </body>
 
 </html>
